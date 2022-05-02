@@ -18,8 +18,6 @@ C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\BlazorApp.csp
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\BlazorApp.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\BlazorApp.RazorComponent.input.cache
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\RazorDeclaration\App.razor.g.cs
-C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\RazorDeclaration\Pages\Counter.razor.g.cs
-C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\RazorDeclaration\Pages\FetchData.razor.g.cs
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\RazorDeclaration\Pages\Index.razor.g.cs
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\RazorDeclaration\Shared\SurveyPrompt.razor.g.cs
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\RazorDeclaration\_Imports.razor.g.cs
@@ -31,8 +29,6 @@ C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\BlazorApp.Tag
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\BlazorApp.TagHelpers.output.cache
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\BlazorApp.RazorCoreGenerate.cache
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\Razor\App.razor.g.cs
-C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\Razor\Pages\Counter.razor.g.cs
-C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\Razor\Pages\FetchData.razor.g.cs
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\Razor\Pages\Index.razor.g.cs
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\Razor\Shared\SurveyPrompt.razor.g.cs
 C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\obj\Debug\net5.0\Razor\_Imports.razor.g.cs
