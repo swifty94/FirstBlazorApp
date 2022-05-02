@@ -1,0 +1,69 @@
+﻿@page "/todolist"
+<style>
+#wrapper {
+  display: flex;
+}
+
+#todo {
+  flex: 0 0 65%;
+}
+
+#done {
+  flex: 1;
+}
+</style>
+<div id="wrapper">
+<!-- TOD items -->
+  <div id="todo">
+    <h3>Todo List. Total: @todoItems.Count(todo => !todo.IsDone)</h3>
+    <ul>
+    @foreach (var todo in todoItems)
+    {
+        <li>
+            <input @onclick="() => MoveToDone(todo)" type="checkbox" @bind="todo.IsDone" />
+            <input @bind="todo.Title" />
+        </li>
+    }
+    </ul>
+    <input placeholder="Something todo" @bind="newTodo" />
+    <button @onclick="AddTodo">Add todo</button>
+  </div>
+<!-- Done items -->
+  <div id="done">
+    <h3>Done List. Total: @doneItems.Count(todo => !todo.IsDone)</h3>
+    <ul>
+    @foreach (var done in doneItems)
+    {
+        <li>            
+            <input @bind="done.Title" />
+        </li>
+    }
+    </ul>
+  </div>
+</div>
+
+@code {
+    private List<TodoItem> todoItems = new();
+    private List<DoneItem> doneItems = new();
+    
+    #nullable enable
+    private string? newTodo;
+    private void AddTodo()
+    {
+        string date = DateTime.Now.ToString("h:mm:ss tt");
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todoItems.Add(new TodoItem { Title = newTodo });
+            Console.WriteLine($"[{date}] New TODO item [ {newTodo} ]");
+            newTodo = string.Empty;
+            date = string.Empty;
+        }
+    }
+    private void MoveToDone(TodoItem item){    
+        string date = DateTime.Now.ToString("h:mm:ss tt");
+        todoItems.Remove(item);
+        doneItems.Add(new DoneItem { Title = item.Title });
+        Console.WriteLine($"[{date}] Moved to DONE [ {item.Title} ]");
+    }
+
+}
