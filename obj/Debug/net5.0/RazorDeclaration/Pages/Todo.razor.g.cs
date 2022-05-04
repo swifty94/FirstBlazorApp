@@ -82,6 +82,13 @@ using BlazorApp.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 2 "C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\Pages\Todo.razor"
+using Microsoft.Extensions.Logging;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/todolist")]
     public partial class Todo : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -91,35 +98,54 @@ using BlazorApp.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 45 "C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\Pages\Todo.razor"
-       
-    private List<TodoItem> todoItems = new();
-    private List<DoneItem> doneItems = new();
+#line 80 "C:\Users\kiril\Documents\LenovoData\Dev\BlazorApp\Pages\Todo.razor"
+                 
+    private List<TaskItem> todoItems = new();
+    private List<TaskItem> inProgressItems = new();
+    private List<TaskItem> doneItems = new();    
     
     #nullable enable
-    private string? newTodo;
+    private string? newTodo;    
     private void AddTodo()
-    {
-        string date = DateTime.Now.ToString("h:mm:ss tt");
+    {        
         if (!string.IsNullOrWhiteSpace(newTodo))
         {
-            todoItems.Add(new TodoItem { Title = newTodo });
-            Console.WriteLine($"[{date}] New TODO item [ {newTodo} ]");
-            newTodo = string.Empty;
-            date = string.Empty;
+            todoItems.Add(new TaskItem { Title = newTodo });            
+            _log.LogInformation($"New TODO item {newTodo}");
+            newTodo = string.Empty;            
         }
     }
-    private void MoveToDone(TodoItem item){    
-        string date = DateTime.Now.ToString("h:mm:ss tt");
-        todoItems.Remove(item);
-        doneItems.Add(new DoneItem { Title = item.Title });
-        Console.WriteLine($"[{date}] Moved to DONE [ {item.Title} ]");
+    private void ChangeStatus(string StatusToSwitch, TaskItem item)
+    {                
+        switch (StatusToSwitch)
+        {
+            case "in-progress":
+                _log.LogInformation($"Moving item {item.Title} to 'in-progress' from '{item.Status}'");
+                item.Status = string.Empty;
+                item.Status = "in-progress";
+                inProgressItems.Add(item);
+                todoItems.Remove(item);                                
+                break;                
+            case "done":
+                _log.LogInformation($"Moving item {item.Title} to 'done' from '{item.Status}'");
+                item.Status = string.Empty;
+                item.Status = "done";
+                doneItems.Add(item);
+                inProgressItems.Remove(item);                
+                break;
+            case "rm":
+                doneItems.Remove(item);                
+                _log.LogInformation($"Item {item.Title} removed from 'done'");
+                break;        
+        }
+        
     }
 
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ILogger<Todo> _log { get; set; }
     }
 }
 #pragma warning restore 1591

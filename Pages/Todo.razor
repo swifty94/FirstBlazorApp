@@ -1,69 +1,122 @@
 ﻿@page "/todolist"
+@using Microsoft.Extensions.Logging;
+@inject ILogger<Todo> _log
 <style>
-#wrapper {
-  display: flex;
-}
-
 #todo {
-  flex: 0 0 65%;
+float:left; 
+width:33%;
+height:280px;
 }
-
-#done {
-  flex: 1;
+#in-progress{
+float:left; 
+width:33%;
+height:280px;
+}
+#done{
+float:right;
+width:33%;
+height:280px;
+}
+input[type=submit] {
+    padding:5px 15px; border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 25px; }
+}
+#btnTodo{
+    background: #ed8c8c;
+}
+#btnProgress{
+    background: #e7ed8c;
+}
+#btnDone{
+    background: #8ced8c;
 }
 </style>
-<div id="wrapper">
-<!-- TOD items -->
-  <div id="todo">
-    <h3>Todo List. Total: @todoItems.Count(todo => !todo.IsDone)</h3>
-    <ul>
-    @foreach (var todo in todoItems)
-    {
-        <li>
-            <input @onclick="() => MoveToDone(todo)" type="checkbox" @bind="todo.IsDone" />
-            <input @bind="todo.Title" />
-        </li>
-    }
-    </ul>
-    <input placeholder="Something todo" @bind="newTodo" />
-    <button @onclick="AddTodo">Add todo</button>
-  </div>
-<!-- Done items -->
-  <div id="done">
-    <h3>Done List. Total: @doneItems.Count(todo => !todo.IsDone)</h3>
-    <ul>
-    @foreach (var done in doneItems)
-    {
-        <li>            
-            <input @bind="done.Title" />
-        </li>
-    }
-    </ul>
-  </div>
+<div class ="parent" id="wrapper">
+
+    <div classs="child" id="todo">
+        <h3>TODO [ @todoItems.Count ]</h3>
+        <ul>
+        @foreach (var todo in todoItems)
+        {
+            <li>
+                <input id='btnTodo' @onclick='() => ChangeStatus("in-progress", todo)' type="submit" value="To 'In progress'"/>
+                <input @bind="todo.Title" />
+            </li>
+        }
+        </ul>
+        <input placeholder="Something todo" @bind="newTodo" />
+        <button @onclick="AddTodo">Add todo</button>
+    </div>
+
+    <div classs="child" id="in-progress">
+        <h3>In progress [ @inProgressItems.Count ] </h3>
+               <ul>
+        @foreach (var pItem in inProgressItems)
+        {
+            <li>
+                <input id='btnProgress' @onclick='() => ChangeStatus("done", pItem)' type="submit" value="Done" />
+                <input @bind="pItem.Title" />
+            </li>
+        }
+        </ul>
+    </div>
+
+    <div classs="child" id="done">
+        <h3>Done. [ @doneItems.Count ]</h3>
+        <ul>
+        @foreach (var done in doneItems)
+        {
+            <li>
+                <input id='btnDone' @onclick='() => ChangeStatus("rm", done)' type="submit" value="Remove" />       
+                <input @bind="done.Title" />
+            </li>
+        }
+        </ul>
+    </div>
 </div>
 
-@code {
-    private List<TodoItem> todoItems = new();
-    private List<DoneItem> doneItems = new();
+@code {          
+    private List<TaskItem> todoItems = new();
+    private List<TaskItem> inProgressItems = new();
+    private List<TaskItem> doneItems = new();    
     
     #nullable enable
-    private string? newTodo;
+    private string? newTodo;    
     private void AddTodo()
-    {
-        string date = DateTime.Now.ToString("h:mm:ss tt");
+    {        
         if (!string.IsNullOrWhiteSpace(newTodo))
         {
-            todoItems.Add(new TodoItem { Title = newTodo });
-            Console.WriteLine($"[{date}] New TODO item [ {newTodo} ]");
-            newTodo = string.Empty;
-            date = string.Empty;
+            todoItems.Add(new TaskItem { Title = newTodo });            
+            _log.LogInformation($"New TODO item {newTodo}");
+            newTodo = string.Empty;            
         }
     }
-    private void MoveToDone(TodoItem item){    
-        string date = DateTime.Now.ToString("h:mm:ss tt");
-        todoItems.Remove(item);
-        doneItems.Add(new DoneItem { Title = item.Title });
-        Console.WriteLine($"[{date}] Moved to DONE [ {item.Title} ]");
+    private void ChangeStatus(string StatusToSwitch, TaskItem item)
+    {                
+        switch (StatusToSwitch)
+        {
+            case "in-progress":
+                _log.LogInformation($"Moving item {item.Title} to 'in-progress' from '{item.Status}'");
+                item.Status = string.Empty;
+                item.Status = "in-progress";
+                inProgressItems.Add(item);
+                todoItems.Remove(item);                                
+                break;                
+            case "done":
+                _log.LogInformation($"Moving item {item.Title} to 'done' from '{item.Status}'");
+                item.Status = string.Empty;
+                item.Status = "done";
+                doneItems.Add(item);
+                inProgressItems.Remove(item);                
+                break;
+            case "rm":
+                doneItems.Remove(item);                
+                _log.LogInformation($"Item {item.Title} removed from 'done'");
+                break;        
+        }
+        
     }
 
 }
