@@ -29,4 +29,5 @@ info: Microsoft.Hosting.Lifetime[0]
 
 - Sample:
 
-![](https://raw.githubusercontent.com/swifty94/FirstBlazorApp/master/Sample/sample.png)
+![](https://raw.githubusercontent.com/swifty94/FirstBlazorApp/master/Sample/sample.gif)
+
